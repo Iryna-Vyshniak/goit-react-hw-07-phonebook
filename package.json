@@ -1,8 +1,8 @@
 {
-  "name": "goit-react-hw-06-phonebook",
+  "name": "goit-react-hw-07-phonebook",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Iryna-Vyshniak.github.io/goit-react-hw-06-phonebook/",
+  "homepage": "https://Iryna-Vyshniak.github.io/goit-react-hw-07-phonebook/",
   "dependencies": {
     "@emotion/react": "^11.11.0",
     "@redux-devtools/extension": "^3.2.5",
