@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { toastifyOptions } from 'utils/toastifyOptions';
 
+// @chakra-ui/react'
+import { Tooltip } from '@chakra-ui/react';
+
 import { IoPersonRemove } from 'react-icons/io5';
 import {
   Btn,
@@ -87,27 +90,51 @@ export const ContactList = () => {
             return (
               <Fragment key={id}>
                 <Item>
-                  <Image
-                    src={avatar !== '' ? `${avatar}` : Avatar}
-                    alt="Contact`s avatar"
-                    width="48"
-                    onClick={() => setModalData(id)}
-                  />
+                  <Tooltip
+                    label="Click"
+                    hasArrow
+                    bg="gray.300"
+                    color="#000"
+                    fontSize="xs"
+                  >
+                    <Image
+                      src={avatar !== '' ? `${avatar}` : Avatar}
+                      alt="Contact`s avatar"
+                      width="48"
+                      onClick={() => setModalData(id)}
+                    />
+                  </Tooltip>
                   <span>{name}:</span>
                   <span>
                     <a href={'tel:' + phone}>{phone}</a>
                   </span>
                   <WrapperBtns>
-                    <WhatsappShareButton
-                      url={'tel:' + phone}
-                      title={'contact' + name}
-                      hashtag="#telnumber"
+                    <Tooltip
+                      label="Share"
+                      hasArrow
+                      bg="gray.300"
+                      color="#000"
+                      fontSize="xs"
                     >
-                      <WhatsappIcon size={30} round={true} />
-                    </WhatsappShareButton>
-                    <Btn type="button" onClick={() => onDeleteContact(id)}>
-                      <IoPersonRemove size="14" />
-                    </Btn>
+                      <WhatsappShareButton
+                        url={'tel:' + phone}
+                        title={'contact' + name}
+                        hashtag="#telnumber"
+                      >
+                        <WhatsappIcon size={30} round={true} />
+                      </WhatsappShareButton>
+                    </Tooltip>
+                    <Tooltip
+                      label="Delete"
+                      hasArrow
+                      bg="gray.300"
+                      color="#000"
+                      fontSize="xs"
+                    >
+                      <Btn type="button" onClick={() => onDeleteContact(id)}>
+                        <IoPersonRemove size="14" />
+                      </Btn>
+                    </Tooltip>
                   </WrapperBtns>
                 </Item>
                 <ContactModal
