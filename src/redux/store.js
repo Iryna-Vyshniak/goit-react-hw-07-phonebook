@@ -1,5 +1,3 @@
-// If using Redux-Persist, you should specifically ignore all the action types it dispatches
-// https://redux-toolkit.js.org/usage/usage-guide#working-with-non-serializable-data
 import { configureStore } from '@reduxjs/toolkit';
 import {
   persistStore,
@@ -13,20 +11,23 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
-import { rootReducer } from './root-reducer';
+import contactsReducer from './contacts/contacts-slice';
+import filterReducer from './filter/filter-slice';
 
 // об'єкт налаштувань, в якому записані, які дані зберігати в Local Storage
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['contacts'],
-  // blacklist: ["filter"]
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, contactsReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    contacts: persistedReducer,
+    filter: filterReducer,
+  },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

@@ -1,16 +1,10 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import 'yup-phone';
 
-// toastify
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { toastifyOptions } from 'utils/toastifyOptions';
-
 // redux
-import { addContact } from 'redux/contacts/contacts-slice';
-import { getContacts } from 'redux/contacts/contacts-selectors';
+import { addContact } from 'redux/contacts/contacts-operations';
 
 import { BsFillTelephoneFill, BsPersonFill } from 'react-icons/bs';
 import { IoMdPersonAdd } from 'react-icons/io';
@@ -26,6 +20,7 @@ import {
 } from './ContactForm.styled';
 
 const schema = yup.object().shape({
+  avatar: yup.string(),
   name: yup
     .string()
     .trim()
@@ -34,7 +29,7 @@ const schema = yup.object().shape({
       'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d`Artagnan'
     )
     .required(),
-  number: yup
+  phone: yup
     .string()
     .phone(
       'UA',
@@ -44,34 +39,13 @@ const schema = yup.object().shape({
     .required(),
 });
 
-const initialValues = { name: '', number: '' };
+const initialValues = { avatar: '', name: '', phone: '' };
 
 export const ContactForm = () => {
-  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  const isDublicate = ({ name, number }) => {
-    const normalizedName = name.toLowerCase().trim();
-    const normalizedNumber = number.trim();
-
-    const dublicate = contacts.find(
-      contact =>
-        contact.name.toLowerCase().trim() === normalizedName ||
-        contact.number.trim() === normalizedNumber
-    );
-    return Boolean(dublicate);
-  };
-
-  const onAddContact = ({ name, number }) => {
-    if (isDublicate({ name, number })) {
-      return toast.error(
-        `This contact is already in contacts`,
-        toastifyOptions
-      );
-    }
-    dispatch(addContact({ name, number }));
-    // const action = addContact({ name, number });
-    // dispatch(action);
+  const onAddContact = data => {
+    dispatch(addContact(data));
   };
   return (
     <Formik
@@ -83,6 +57,14 @@ export const ContactForm = () => {
       validationSchema={schema}
     >
       <Form autoComplete="off">
+        <FormField>
+          <LabelWrapper>
+            <BsPersonFill />
+            <LabelSpan>Avatar</LabelSpan>
+          </LabelWrapper>
+          <FieldFormik name="avatar" placeholder="Add avatar" />
+          <ErrorMessage name="avatar" component="span" />
+        </FormField>
         <FormField>
           <LabelWrapper>
             <BsPersonFill />
@@ -98,10 +80,10 @@ export const ContactForm = () => {
           </LabelWrapper>
           <FieldFormik
             type="tel"
-            name="number"
+            name="phone"
             placeholder="+38-050-123-45-67"
           />
-          <ErrorMessage name="number" component="span" />
+          <ErrorMessage name="phone" component="span" />
         </FormField>
         <StyledButton type="submit">
           <IoMdPersonAdd size="16" />

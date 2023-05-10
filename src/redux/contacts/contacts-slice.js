@@ -1,67 +1,55 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-import initialContacts from 'data/contacts.json';
+
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+} from './contacts-operations';
+
+const initialState = {
+  items: [],
+  isLoading: false,
+  error: null,
+};
+
+const handlePending = state => {
+  state.isLoading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, { payload }) => {
+  state.isLoading = false;
+  state.error = payload;
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: initialContacts,
-  reducers: {
-    addContact: {
-      reducer: (state, { payload }) => {
-        //state.push(payload);
-        return [...state, payload];
-      },
-      // підготовча ф-ція
-      prepare: data => {
-        return {
-          payload: {
-            id: nanoid(),
-            ...data,
-          },
-        };
-      },
-    },
-    deleteContact: (state, { payload }) => {
-      return state.filter(({ id }) => id !== payload);
-    },
+  initialState,
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.pending, handlePending)
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = payload;
+      })
+      .addCase(fetchContacts.rejected, handleRejected)
+      .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items.push(payload);
+      })
+      .addCase(addContact.rejected, handleRejected)
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = state.items.filter(({ id }) => id !== payload);
+      })
+      .addCase(deleteContact.rejected, handleRejected);
   },
 });
 
-export const { addContact, deleteContact } = contactsSlice.actions;
 export default contactsSlice.reducer;
-
-// import { createReducer } from '@reduxjs/toolkit';
-// import { addContact, deleteContact } from './contacts-actions';
-
-//import initialContacts from 'data/contacts.json';
-
-// export const contactsReducer = createReducer([], builder => {
-//   builder
-//     .addCase(addContact, (state, { payload }) => {
-//       1st variant => library protect mutation
-//       state.push(payload); // => return [...state, payload];
-//       2nd variant
-//       return [...state, payload];
-//     })
-//     .addCase(deleteContact, (state, { payload }) => {
-//       return state.filter(contact => contact.id !== payload);
-//     });
-// });
-
-/* 
-# from file contacts-actions 
-
-import { createAction } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-
-export const addContact = createAction('contacts/add', data => {
-  return {
-    payload: {
-      id: nanoid(),
-      ...data,
-    },
-  };
-});
-export const deleteContact = createAction('contacts/delete');
-
-*/
