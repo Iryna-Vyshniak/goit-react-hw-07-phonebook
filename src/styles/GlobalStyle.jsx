@@ -87,6 +87,8 @@ export const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+    color: ${props => props.theme.colors.black};
+    text-shadow: ${props => props.theme.shadows.textShadow};
 }
 
   main {
