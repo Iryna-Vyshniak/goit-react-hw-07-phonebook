@@ -62,7 +62,7 @@ export const ContactForm = () => {
             <BsPersonFill />
             <LabelSpan>Avatar</LabelSpan>
           </LabelWrapper>
-          <FieldFormik name="avatar" placeholder="Add avatar" />
+          <FieldFormik name="avatar" placeholder="Add link to avatar" />
           <ErrorMessage name="avatar" component="span" />
         </FormField>
         <FormField>
