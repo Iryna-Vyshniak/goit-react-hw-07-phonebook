@@ -1,5 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
+// toastify
+import { toast } from 'react-toastify';
+import { toastifyOptions } from 'utils/toastifyOptions';
 
 import { IoPersonRemove } from 'react-icons/io5';
 import { Btn, Image, Item, List } from './ContactList.styled';
@@ -9,17 +13,21 @@ import { fetchContacts } from 'redux/contacts/contacts-operations';
 import { deleteContact } from 'redux/contacts/contacts-operations';
 import {
   getContacts,
-  getFilteredContacts,
   getIsLoading,
   getError,
 } from 'redux/contacts/contacts-selectors';
+import { getFilter } from 'redux/filter/filter-selectors';
+import { ContactModal } from 'components/Modal/Modal';
+import { Fragment } from 'react';
+import Avatar from 'assets/avatar.png';
 
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
-  const filteredContacts = useSelector(getFilteredContacts);
-  console.log(filteredContacts);
+  const filter = useSelector(getFilter);
+
+  const [selectedContact, setSelectedContact] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -27,30 +35,71 @@ export const ContactList = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
+  const getFilteredContacts = () => {
+    if (!filter) {
+      return contacts;
+    }
+    const normalizedFilter = filter.toLowerCase();
+    const filteredContacts = contacts.filter(
+      ({ name, phone }) =>
+        name.toLowerCase().trim().includes(normalizedFilter) ||
+        phone.trim().includes(normalizedFilter)
+    );
+
+    if (normalizedFilter && !filteredContacts.length) {
+      toast.warn(`No contacts matching your request`, toastifyOptions);
+      return [];
+    }
+    return filteredContacts;
+  };
+
+  const filteredContacts = getFilteredContacts();
+
   const onDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
+  };
+
+  const closeModal = () => {
+    setSelectedContact(null);
+  };
+
+  const setModalData = id => {
+    const selectContact = contacts.find(contact => contact.id === id);
+    setSelectedContact(selectContact);
   };
 
   return (
     <>
       {isLoading && contacts.length === 0 && <div>Loading....</div>}
       {error && !isLoading && <div>Ooops, error...</div>}
-
-      <List>
-        {filteredContacts?.map(({ avatar, name, phone, id }) => {
-          console.log(avatar);
-          return (
-            <Item key={id}>
-              <Image src={avatar} alt="Contact`s avatar" width="48" />
-              <span>{name}:</span>
-              <span>{phone}</span>
-              <Btn type="button" onClick={() => onDeleteContact(id)}>
-                <IoPersonRemove size="14" />
-              </Btn>
-            </Item>
-          );
-        })}
-      </List>
+      {!error && !isLoading && filteredContacts.length > 0 && (
+        <List>
+          {filteredContacts?.map(({ avatar, name, phone, id }) => {
+            return (
+              <Fragment key={id}>
+                <Item>
+                  <Image
+                    src={avatar !== '' ? `${avatar}` : Avatar}
+                    alt="Contact`s avatar"
+                    width="48"
+                    onClick={() => setModalData(id)}
+                  />
+                  <span>{name}:</span>
+                  <span>{phone}</span>
+                  <Btn type="button" onClick={() => onDeleteContact(id)}>
+                    <IoPersonRemove size="14" />
+                  </Btn>
+                </Item>
+                <ContactModal
+                  isOpen={selectedContact !== null}
+                  onClose={closeModal}
+                  data={selectedContact}
+                />
+              </Fragment>
+            );
+          })}
+        </List>
+      )}
     </>
   );
 };
