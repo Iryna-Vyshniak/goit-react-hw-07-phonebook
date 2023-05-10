@@ -14,13 +14,26 @@ export const List = styled.ul`
 `;
 export const Item = styled.li`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #fff;
 
   color: ${props => props.theme.colors.black};
   text-shadow: ${props => props.theme.shadows.textShadow};
   font-size: ${props => props.theme.fontSizes.s};
+
+  @media screen and (min-width: 480px) {
+    flex-direction: row;
+    gap: 16px;
+  }
+
+  span {
+    margin: 0 auto;
+    text-align: center;
+  }
 `;
 
 export const Btn = styled.button`
@@ -72,4 +85,12 @@ export const Image = styled.img`
     background: #ecf0f3;
     box-shadow: inset -3px -3px 7px #ffffff, inset 3px 3px 5px #ceced1;
   }
+`;
+
+export const Info = styled.div`
+  padding-top: ${p => p.theme.space[3]}px;
+  padding-bottom: ${p => p.theme.space[3]}px;
+  padding-left: ${p => p.theme.space[4]}px;
+  padding-right: ${p => p.theme.space[4]}px;
+  text-align: center;
 `;
