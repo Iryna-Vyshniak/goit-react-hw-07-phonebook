@@ -10,6 +10,7 @@ export const MainTitle = styled.h1`
   color: ${props => props.theme.colors.primary};
   text-shadow: 1px 1px 0 #fff;
   font-size: 22px;
+  font-weight: 700;
 
   @media screen and (min-width: 480px) {
     font-size: ${({ theme }) => theme.fontSizes.l};

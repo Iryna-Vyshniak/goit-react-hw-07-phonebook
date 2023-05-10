@@ -32,7 +32,6 @@ export const GlobalStyle = createGlobalStyle`
     line-height: 1.85;
 
     overflow-x: hidden;
-    transition: 2500ms;
   }
 
   body::-webkit-scrollbar {
