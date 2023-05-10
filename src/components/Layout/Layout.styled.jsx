@@ -7,7 +7,7 @@ export const Container = styled.div`
   justify-content: center;
 
   margin: 0 auto;
-  padding: 24px;
+  padding: 24px 14px;
   width: 100%;
 `;
 
@@ -18,6 +18,6 @@ export const MainBlock = styled.main`
   justify-content: center;
 
   margin: 0 auto;
-  padding: 24px;
+  padding: 8px;
   width: 100%;
 `;
