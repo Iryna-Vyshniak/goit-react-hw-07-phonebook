@@ -10,7 +10,7 @@ export const List = styled.ul`
   padding-right: ${p => p.theme.space[4]}px;
 
   max-width: 100%;
-  width: 300px;
+  width: 500px;
 `;
 export const Item = styled.li`
   display: flex;
@@ -53,5 +53,22 @@ export const Btn = styled.button`
       fill: ${p => p.theme.colors.black};
       stroke: ${p => p.theme.colors.white};
     }
+  }
+`;
+
+export const Image = styled.img`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 40px;
+  width: 40px;
+
+  border-radius: 50%;
+  box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+
+  &:hover {
+    background: #ecf0f3;
+    box-shadow: inset -3px -3px 7px #ffffff, inset 3px 3px 5px #ceced1;
   }
 `;
