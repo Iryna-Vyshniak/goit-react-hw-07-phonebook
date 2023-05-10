@@ -100,7 +100,8 @@ export const ContactList = () => {
                   <WrapperBtns>
                     <WhatsappShareButton
                       url={'tel:' + phone}
-                      hashtag="#programing joke"
+                      title={'contact' + name}
+                      hashtag="#telnumber"
                     >
                       <WhatsappIcon size={30} round={true} />
                     </WhatsappShareButton>
