@@ -8,7 +8,6 @@ export const Container = styled.div`
 
   margin: 0 auto;
   padding: 24px;
-  height: 100vh;
   width: 100%;
 `;
 
@@ -20,6 +19,5 @@ export const MainBlock = styled.main`
 
   margin: 0 auto;
   padding: 24px;
-  height: 100vh;
   width: 100%;
 `;
