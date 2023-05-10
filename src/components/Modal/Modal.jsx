@@ -6,7 +6,7 @@ import { CloseBtn, ModalPicture, PictureDescr } from './Modal.styled';
 
 const customStyles = {
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    backgroundColor: 'rgba(142,154,175, 0.3)',
     zIndex: 1300,
   },
   content: {
@@ -46,7 +46,9 @@ export const ContactModal = ({ isOpen, data, onClose }) => {
       />
       <PictureDescr>
         <p>{data?.name}</p>
-        <p>{data?.phone}</p>
+        <p>
+          <a href={'tel:' + data?.phone}>{data?.phone}</a>
+        </p>
       </PictureDescr>
     </Modal>
   );
