@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { toastifyOptions } from 'utils/toastifyOptions';
 
 import { IoPersonRemove } from 'react-icons/io5';
-import { Btn, Image, Item, List } from './ContactList.styled';
+import { Btn, Image, Info, Item, List } from './ContactList.styled';
 
 // redux
 import { fetchContacts } from 'redux/contacts/contacts-operations';
@@ -72,7 +72,7 @@ export const ContactList = () => {
     <>
       {isLoading && contacts.length === 0 && <div>Loading....</div>}
       {error && !isLoading && <div>Ooops, error...</div>}
-      {!error && !isLoading && filteredContacts.length > 0 && (
+      {!error && !isLoading && filteredContacts.length > 0 ? (
         <List>
           {filteredContacts?.map(({ avatar, name, phone, id }) => {
             return (
@@ -85,7 +85,9 @@ export const ContactList = () => {
                     onClick={() => setModalData(id)}
                   />
                   <span>{name}:</span>
-                  <span>{phone}</span>
+                  <span>
+                    <a href={'tel:' + phone}>{phone}</a>
+                  </span>
                   <Btn type="button" onClick={() => onDeleteContact(id)}>
                     <IoPersonRemove size="14" />
                   </Btn>
@@ -99,6 +101,8 @@ export const ContactList = () => {
             );
           })}
         </List>
+      ) : (
+        <Info>Phonebook is empty. Please, add your first contact</Info>
       )}
     </>
   );
