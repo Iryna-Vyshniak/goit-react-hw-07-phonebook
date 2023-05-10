@@ -6,7 +6,16 @@ import { toast } from 'react-toastify';
 import { toastifyOptions } from 'utils/toastifyOptions';
 
 import { IoPersonRemove } from 'react-icons/io5';
-import { Btn, Image, Info, Item, List } from './ContactList.styled';
+import {
+  Btn,
+  Image,
+  Info,
+  Item,
+  List,
+  WhatsappIcon,
+  WhatsappShareButton,
+  WrapperBtns,
+} from './ContactList.styled';
 
 // redux
 import { fetchContacts } from 'redux/contacts/contacts-operations';
@@ -88,9 +97,17 @@ export const ContactList = () => {
                   <span>
                     <a href={'tel:' + phone}>{phone}</a>
                   </span>
-                  <Btn type="button" onClick={() => onDeleteContact(id)}>
-                    <IoPersonRemove size="14" />
-                  </Btn>
+                  <WrapperBtns>
+                    <WhatsappShareButton
+                      url={'tel:' + phone}
+                      hashtag="#programing joke"
+                    >
+                      <WhatsappIcon size={30} round={true} />
+                    </WhatsappShareButton>
+                    <Btn type="button" onClick={() => onDeleteContact(id)}>
+                      <IoPersonRemove size="14" />
+                    </Btn>
+                  </WrapperBtns>
                 </Item>
                 <ContactModal
                   isOpen={selectedContact !== null}
