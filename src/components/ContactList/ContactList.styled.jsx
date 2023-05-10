@@ -66,6 +66,7 @@ export const Image = styled.img`
 
   border-radius: 50%;
   box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
+  cursor: pointer;
 
   &:hover {
     background: #ecf0f3;
