@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { WhatsappIcon as Icon, WhatsappShareButton as Button } from 'react-share';
 
 export const List = styled.ul`
   display: flex;
@@ -36,6 +37,18 @@ export const Item = styled.li`
   }
 `;
 
+export const WrapperBtns = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+`;
+export const WhatsappShareButton = styled(Button)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Btn = styled.button`
   padding-top: ${p => p.theme.space[2]}px;
   padding-bottom: ${p => p.theme.space[2]}px;
@@ -57,6 +70,30 @@ export const Btn = styled.button`
     svg {
       fill: ${p => p.theme.colors.primary};
       stroke: ${p => p.theme.colors.black};
+    }
+  }
+
+  &:active {
+    background-color: ${p => p.theme.colors.accent};
+    svg {
+      fill: ${p => p.theme.colors.black};
+      stroke: ${p => p.theme.colors.white};
+    }
+  }
+`;
+
+export const WhatsappIcon = styled(Icon)`
+  border-radius: 50%;
+  box-shadow: ${p => p.theme.shadows.boxShadow};
+  transition: all 0.2s ease-in-out;
+
+  &:hover,
+  &:focus {
+    box-shadow: inset -1px -1px 1px #ffffff, inset 1px 1px 1px #8e9aaf;
+    svg {
+      fill: ${p => p.theme.colors.primary};
+      stroke: ${p => p.theme.colors.black};
+      box-shadow: ${p => p.theme.shadows.boxShadow};
     }
   }
 
