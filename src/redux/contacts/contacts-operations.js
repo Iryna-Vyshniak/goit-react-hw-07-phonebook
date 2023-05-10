@@ -10,7 +10,6 @@ export const fetchContacts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const { data } = await api.getAllContacts();
-      console.log(data);
       return data;
     } catch ({ response }) {
       return thunkAPI.rejectWithValue(response);
@@ -23,12 +22,12 @@ const isDublicate = (contacts, { name, phone }) => {
   const normalizedName = name.toLowerCase().trim();
   const normalizedNumber = phone.trim();
 
-  const dublicate = contacts.find(
+  const dublicate = contacts.some(
     contact =>
       contact.name.toLowerCase().trim() === normalizedName ||
       contact.phone.trim() === normalizedNumber
   );
-  return Boolean(dublicate);
+  return dublicate;
 };
 
 export const addContact = createAsyncThunk(
@@ -36,7 +35,6 @@ export const addContact = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const { data: result } = await api.addContact(data);
-      console.log(result);
       return result;
     } catch ({ response }) {
       return rejectWithValue(response);
@@ -62,25 +60,9 @@ export const deleteContact = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       await api.deleteContact(id);
-      console.log(id);
       return id;
     } catch ({ response }) {
       return rejectWithValue(response);
     }
   }
 );
-
-// createAsyncThunk створює функцію:
-// export const fetchContacts = () => {
-//   const func = async dispatch => {
-//     try {
-//       dispatch(actions.fetchContactsPending());
-//       const { data } = await api.getAllContacts();
-//       dispatch(actions.fetchContactsFulfilled(data));
-//     } catch ({ response }) {
-//       dispatch(actions.fetchContactsRejected(response));
-//     }
-//   };
-
-//   return func;
-// };
