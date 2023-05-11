@@ -15,7 +15,7 @@ export const addContact = data => {
 };
 
 export const editContact = data => {
-  return contactsInstance.patch(`/${data.id}`, {
+  return contactsInstance.put(`/${data.id}`, {
     avatar: data.avatar,
     name: data.name,
     phone: data.phone,
