@@ -43,12 +43,12 @@ export const ChangeContactModal = ({ isOpen, data, onClose }) => {
 
   const dispatch = useDispatch();
 
-  const onChangeContact = e => {
-    setFormValues(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-    dispatch(changeContact(formValues));
+  const onSubmitHandler = (values, { resetForm }) => {
+    const newFormValues = { ...formValues, ...values };
+    console.log(newFormValues);
+    setFormValues(newFormValues);
+    dispatch(changeContact(newFormValues));
+    resetForm();
   };
 
   return (
@@ -64,10 +64,7 @@ export const ChangeContactModal = ({ isOpen, data, onClose }) => {
         </CloseBtn>
         <Formik
           initialValues={savedValues || initialValues}
-          onSubmit={(values, { resetForm }) => {
-            onChangeContact({ ...values });
-            resetForm();
-          }}
+          onSubmit={onSubmitHandler}
           enableReinitialize
           validationSchema={schema}
         >
