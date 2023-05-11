@@ -11,10 +11,12 @@ import { Tooltip } from '@chakra-ui/react';
 import { IoPersonRemove } from 'react-icons/io5';
 import {
   Btn,
+  ContactDescr,
   Image,
   Info,
   Item,
   List,
+  ModalPictureWrapper,
   WhatsappIcon,
   WhatsappShareButton,
   WrapperBtns,
@@ -98,45 +100,49 @@ export const ContactList = () => {
                     color="#000"
                     fontSize="xs"
                   >
-                    <Image
-                      src={avatar !== '' ? `${avatar}` : Avatar}
-                      alt="Contact`s avatar"
-                      width="48"
-                      onClick={() => setModalData(id)}
-                    />
+                    <ModalPictureWrapper>
+                      <Image
+                        src={avatar !== '' ? `${avatar}` : Avatar}
+                        alt="Contact`s avatar"
+                        width="48"
+                        onClick={() => setModalData(id)}
+                      />
+                    </ModalPictureWrapper>
                   </Tooltip>
-                  <span>{name}:</span>
-                  <span>
-                    <a href={'tel:' + phone}>{phone}</a>
-                  </span>
-                  <WrapperBtns>
-                    <Tooltip
-                      label="Share"
-                      hasArrow
-                      bg="gray.300"
-                      color="#000"
-                      fontSize="xs"
-                    >
-                      <WhatsappShareButton
-                        url={'tel:' + phone}
-                        title={'contact' + name}
-                        hashtag="#telnumber"
+                  <ContactDescr>
+                    <span>{name}:</span>
+                    <span>
+                      <a href={'tel:' + phone}>{phone}</a>
+                    </span>
+                    <WrapperBtns>
+                      <Tooltip
+                        label="Share"
+                        hasArrow
+                        bg="gray.300"
+                        color="#000"
+                        fontSize="xs"
                       >
-                        <WhatsappIcon size={30} round={true} />
-                      </WhatsappShareButton>
-                    </Tooltip>
-                    <Tooltip
-                      label="Delete"
-                      hasArrow
-                      bg="gray.300"
-                      color="#000"
-                      fontSize="xs"
-                    >
-                      <Btn type="button" onClick={() => onDeleteContact(id)}>
-                        <IoPersonRemove size="14" />
-                      </Btn>
-                    </Tooltip>
-                  </WrapperBtns>
+                        <WhatsappShareButton
+                          url={'tel:' + phone}
+                          title={'contact' + name}
+                          hashtag="#telnumber"
+                        >
+                          <WhatsappIcon size={30} round={true} />
+                        </WhatsappShareButton>
+                      </Tooltip>
+                      <Tooltip
+                        label="Delete"
+                        hasArrow
+                        bg="gray.300"
+                        color="#000"
+                        fontSize="xs"
+                      >
+                        <Btn type="button" onClick={() => onDeleteContact(id)}>
+                          <IoPersonRemove size="14" />
+                        </Btn>
+                      </Tooltip>
+                    </WrapperBtns>
+                  </ContactDescr>
                 </Item>
                 <ContactModal
                   isOpen={selectedContact !== null}

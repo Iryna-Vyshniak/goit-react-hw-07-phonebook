@@ -1,5 +1,8 @@
 import styled from 'styled-components';
-import { WhatsappIcon as Icon, WhatsappShareButton as Button } from 'react-share';
+import {
+  WhatsappIcon as Icon,
+  WhatsappShareButton as Button,
+} from 'react-share';
 
 export const List = styled.ul`
   display: flex;
@@ -13,9 +16,10 @@ export const List = styled.ul`
   max-width: 100%;
   width: 500px;
 `;
+
 export const Item = styled.li`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
@@ -27,7 +31,6 @@ export const Item = styled.li`
   font-size: ${props => props.theme.fontSizes.s};
 
   @media screen and (min-width: 480px) {
-    flex-direction: row;
     gap: 16px;
   }
 
@@ -106,22 +109,35 @@ export const WhatsappIcon = styled(Icon)`
   }
 `;
 
-export const Image = styled.img`
+export const ModalPictureWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
 
-  height: 40px;
-  width: 40px;
+  height: 60px;
+  width: 60px;
 
   border-radius: 50%;
   box-shadow: -3px -3px 7px #ffffff, 3px 3px 5px #ceced1;
   cursor: pointer;
+  overflow: hidden;
 
   &:hover {
     background: #ecf0f3;
     box-shadow: inset -3px -3px 7px #ffffff, inset 3px 3px 5px #ceced1;
   }
+
+  @media screen and (min-width: 480px) {
+    height: 40px;
+    width: 40px;
+  }
+`;
+
+export const Image = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 `;
 
 export const Info = styled.div`
@@ -130,4 +146,23 @@ export const Info = styled.div`
   padding-left: ${p => p.theme.space[4]}px;
   padding-right: ${p => p.theme.space[4]}px;
   text-align: center;
+`;
+
+export const ContactDescr = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: ${p => p.theme.space[2]}px;
+  padding-bottom: ${p => p.theme.space[2]}px;
+  padding-left: ${p => p.theme.space[2]}px;
+  padding-right: ${p => p.theme.space[2]}px;
+  width: 80%;
+  height: auto;
+
+  @media screen and (min-width: 480px) {
+    flex-direction: row;
+    gap: 16px;
+  }
 `;
