@@ -27,11 +27,13 @@ import { customStylesInsideModal } from 'styles/modalStyles';
 
 Modal.setAppElement('#root');
 
-export const ChangeContactModal = ({ isOpen, data, onClose }) => {
+export const ChangeContactModal = ({
+  isOpen,
+  data,
+  onClose,
+  setModalIsOpen,
+}) => {
   const [formValues, setFormValues] = useState(data || {});
-
-  //console.log(data);
-  //const { name, phone, avatar } = formValues; //data from list item, where click on 'edit' button
 
   const initialValues = { avatar: '', name: '', phone: '' };
   const savedValues = {
@@ -39,23 +41,27 @@ export const ChangeContactModal = ({ isOpen, data, onClose }) => {
     name: data?.name || '',
     phone: data?.phone || '',
   };
-  //console.log(formValues);
 
   const dispatch = useDispatch();
 
+  const closeModal = () => {
+    onClose();
+    setModalIsOpen(false);
+  };
+
   const onSubmitHandler = (values, { resetForm }) => {
     const newFormValues = { ...formValues, ...values };
-    //console.log(newFormValues);
     setFormValues(newFormValues);
     dispatch(changeContact(newFormValues));
     resetForm();
+    closeModal();
   };
 
   return (
     <>
       <Modal
         isOpen={isOpen}
-        onRequestClose={onClose}
+        onRequestClose={closeModal}
         contentLabel="Inline Styles Modal Example"
         style={customStylesInsideModal}
       >
