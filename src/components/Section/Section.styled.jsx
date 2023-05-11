@@ -9,7 +9,7 @@ export const SectionWrapper = styled.section`
   padding-bottom: ${props => props.theme.space[4]}px;
 
   max-width: 100%;
-  width: 600px;
+  width: 43.75rem;
 
   background: #e6eaff;
   text-shadow: 1px 1px 0 #fff;
