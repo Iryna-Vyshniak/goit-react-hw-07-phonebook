@@ -29,6 +29,7 @@ import {
   getError,
 } from 'redux/contacts/contacts-selectors';
 import { getFilter } from 'redux/filter/filter-selectors';
+
 import { ContactModal } from 'components/Modal/Modal';
 import { Fragment } from 'react';
 import Avatar from 'assets/avatar.png';
