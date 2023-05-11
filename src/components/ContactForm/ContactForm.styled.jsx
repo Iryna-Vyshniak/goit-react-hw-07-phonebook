@@ -7,10 +7,10 @@ export const Form = styled(FormikForm)`
   align-items: center;
   gap: 12px;
   margin-bottom: ${props => props.theme.space[4]}px;
-  padding: ${props => props.theme.space[3]}px;
+  padding: ${props => props.theme.space[5]}px;
 
   max-width: 100%;
-  width: 500px;
+  width: 700px;
 `;
 
 export const FormField = styled.label`
@@ -19,7 +19,7 @@ export const FormField = styled.label`
   gap: 8px;
 
   max-width: 100%;
-  width: 500px;
+  width: 700px;
 
   color: ${props => props.theme.colors.primary};
   text-shadow: ${props => props.theme.shadows.textShadow};
