@@ -13,3 +13,11 @@ export const deleteContact = id => {
 export const addContact = data => {
   return contactsInstance.post('/', data);
 };
+
+export const editContact = (avatar, name, phone, id) => {
+  return contactsInstance.patch(`/${id}`, {
+    avatar,
+    name,
+    phone,
+  });
+};
