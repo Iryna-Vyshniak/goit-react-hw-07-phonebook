@@ -55,17 +55,14 @@ const contactsSlice = createSlice({
       .addCase(changeContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.error = null;
-        state.items = state.items.filter(({ id }) => id !== payload);
+        console.log(state.items);
+        const index = state.items.findIndex(({ id }) => id === payload.id);
+        console.log(state.items[index]);
+        console.log(payload);
+        if (index !== -1) {
+          state.items[index] = payload;
+        }
       })
-      // gpt ??? why id must work too... ???
-      // .addCase(changeContact.fulfilled, (state, { payload }) => {
-      //   state.isLoading = false;
-      //   state.error = null;
-      //   const index = state.items.findIndex(({ id }) => id === payload.id);
-      //   if (index !== -1) {
-      //     state.items[index] = payload;
-      //   }
-      // })
       .addCase(changeContact.rejected, handleRejected);
   },
 });
