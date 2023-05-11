@@ -1,6 +1,5 @@
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ChakraProvider } from '@chakra-ui/react';
 
 // components
 import { GlobalStyle } from 'styles/GlobalStyle';
@@ -13,7 +12,7 @@ import { ContactList } from './ContactList/ContactList';
 
 export const App = () => {
   return (
-    <ChakraProvider>
+    <>
       <Layout>
         <Section title="PhoneBook">
           <ContactForm />
@@ -22,8 +21,8 @@ export const App = () => {
           <ContactList />
         </Section>
         <ToastContainer />
-        <GlobalStyle />
       </Layout>
-    </ChakraProvider>
+      <GlobalStyle />
+    </>
   );
 };
