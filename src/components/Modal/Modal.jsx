@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { MdOutlineClose } from 'react-icons/md';
 import Avatar from 'assets/avatar.png';
 import {
+  Button,
   CloseBtn,
   ModalPicture,
   ModalPictureWrapper,
@@ -11,7 +12,7 @@ import {
 import { customStyles } from 'styles/modalStyles';
 import { useState } from 'react';
 
-import { Button } from '@chakra-ui/react';
+import { Tooltip } from '@chakra-ui/react';
 
 import { TfiPencil } from 'react-icons/tfi';
 import { ChangeContactModal } from 'components/ChangeContactModal/ChangeContactModal';
@@ -47,9 +48,11 @@ export const ContactModal = ({ isOpen, data, onClose }) => {
       </ModalPictureWrapper>
       <PictureDescr>
         <p>{data?.name}</p>
-        <p>
-          <a href={'tel:' + data?.phone}>{data?.phone}</a>
-        </p>
+        <Tooltip label="Call" hasArrow bg="gray.300" color="#000" fontSize="xs">
+          <p>
+            <a href={'tel:' + data?.phone}>{data?.phone}</a>
+          </p>
+        </Tooltip>
       </PictureDescr>
       <Button onClick={openModal}>
         <TfiPencil size="16" />

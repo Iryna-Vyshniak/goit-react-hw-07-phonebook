@@ -111,9 +111,17 @@ export const ContactList = () => {
                   </Tooltip>
                   <ContactDescr>
                     <span>{name}:</span>
-                    <span>
-                      <a href={'tel:' + phone}>{phone}</a>
-                    </span>
+                    <Tooltip
+                      label="Call"
+                      hasArrow
+                      bg="gray.300"
+                      color="#000"
+                      fontSize="xs"
+                    >
+                      <span>
+                        <a href={'tel:' + phone}>{phone}</a>
+                      </span>
+                    </Tooltip>
                     <WrapperBtns>
                       <Tooltip
                         label="Share"
