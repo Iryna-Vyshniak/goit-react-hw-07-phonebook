@@ -14,10 +14,10 @@ export const addContact = data => {
   return contactsInstance.post('/', data);
 };
 
-export const editContact = (avatar, name, phone, id) => {
-  return contactsInstance.patch(`/${id}`, {
-    avatar,
-    name,
-    phone,
+export const editContact = data => {
+  return contactsInstance.patch(`/${data.id}`, {
+    avatar: data.avatar,
+    name: data.name,
+    phone: data.phone,
   });
 };
