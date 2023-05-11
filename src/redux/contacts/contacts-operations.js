@@ -12,7 +12,9 @@ export const fetchContacts = createAsyncThunk(
       const { data } = await api.getAllContacts();
       return data;
     } catch ({ response }) {
-      return thunkAPI.rejectWithValue(`Ooops! ${response}`);
+      return thunkAPI.rejectWithValue(
+        `Ooops! Wrong... Try again or update browser`
+      );
     }
   }
 );
@@ -35,9 +37,12 @@ export const addContact = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const { data: result } = await api.addContact(data);
+      toast.success('Add contact', {
+        position: 'bottom-right',
+      });
       return result;
     } catch ({ response }) {
-      return rejectWithValue(`Ooops! ${response}`);
+      return rejectWithValue(`Ooops! Wrong... Try again or update browser`);
     }
   },
   // щоб зробити перевірку до запиту на дублікати - передаємо 3-ім аргументом object with condition
@@ -60,9 +65,12 @@ export const deleteContact = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       await api.deleteContact(id);
+      toast.success('Contact delete', {
+        position: 'bottom-right',
+      });
       return id;
     } catch ({ response }) {
-      return rejectWithValue(`Ooops! ${response}`);
+      return rejectWithValue(`Ooops! Wrong... Try again or update browser`);
     }
   }
 );
@@ -72,16 +80,13 @@ export const changeContact = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const { data: result } = await api.editContact(data);
-      toast.success('Contact update!', {
+      toast.success('Contact update', {
         position: 'bottom-right',
       });
-      console.log(result);
+      // console.log(result);
       return result;
     } catch ({ response }) {
-      toast.error(`Ooops! ${response}`, {
-        position: 'bottom-right',
-      });
-      return rejectWithValue(`Ooops! ${response}`);
+      return rejectWithValue(`Ooops! Wrong... Try again or update browser`);
     }
   }
 );

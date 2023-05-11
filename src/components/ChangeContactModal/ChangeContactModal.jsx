@@ -30,7 +30,7 @@ Modal.setAppElement('#root');
 export const ChangeContactModal = ({ isOpen, data, onClose }) => {
   const [formValues, setFormValues] = useState(data || {});
 
-  console.log(data);
+  //console.log(data);
   //const { name, phone, avatar } = formValues; //data from list item, where click on 'edit' button
 
   const initialValues = { avatar: '', name: '', phone: '' };
@@ -39,13 +39,13 @@ export const ChangeContactModal = ({ isOpen, data, onClose }) => {
     name: data?.name || '',
     phone: data?.phone || '',
   };
-  console.log(formValues);
+  //console.log(formValues);
 
   const dispatch = useDispatch();
 
   const onSubmitHandler = (values, { resetForm }) => {
     const newFormValues = { ...formValues, ...values };
-    console.log(newFormValues);
+    //console.log(newFormValues);
     setFormValues(newFormValues);
     dispatch(changeContact(newFormValues));
     resetForm();

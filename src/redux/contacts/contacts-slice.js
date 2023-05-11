@@ -55,10 +55,10 @@ const contactsSlice = createSlice({
       .addCase(changeContact.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.error = null;
-        console.log(state.items);
+        //console.log(state.items);
         const index = state.items.findIndex(({ id }) => id === payload.id);
-        console.log(state.items[index]);
-        console.log(payload);
+        //console.log(state.items[index]);
+        //console.log(payload);
         if (index !== -1) {
           state.items[index] = payload;
         }

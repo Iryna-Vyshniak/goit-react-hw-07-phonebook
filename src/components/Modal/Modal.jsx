@@ -2,7 +2,12 @@ import Modal from 'react-modal';
 
 import { MdOutlineClose } from 'react-icons/md';
 import Avatar from 'assets/avatar.png';
-import { CloseBtn, ModalPicture, PictureDescr } from './Modal.styled';
+import {
+  CloseBtn,
+  ModalPicture,
+  ModalPictureWrapper,
+  PictureDescr,
+} from './Modal.styled';
 import { customStyles } from 'styles/modalStyles';
 import { useState } from 'react';
 
@@ -33,11 +38,13 @@ export const ContactModal = ({ isOpen, data, onClose }) => {
       <CloseBtn onClick={onClose}>
         <MdOutlineClose />
       </CloseBtn>
-      <ModalPicture
-        src={data?.avatar !== '' ? `${data?.avatar}` : Avatar}
-        alt="photo"
-        width="260"
-      />
+      <ModalPictureWrapper>
+        <ModalPicture
+          src={data?.avatar !== '' ? `${data?.avatar}` : Avatar}
+          alt="photo"
+          width="260"
+        />
+      </ModalPictureWrapper>
       <PictureDescr>
         <p>{data?.name}</p>
         <p>

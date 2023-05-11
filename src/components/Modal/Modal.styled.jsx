@@ -17,9 +17,15 @@ export const CloseBtn = styled.button`
   color: #bbbbbb;
 `;
 
-export const ModalPicture = styled.img`
+export const ModalPictureWrapper = styled.div`
   max-width: 100%;
   width: 420px;
+  height: 360px;
+  object-fit: cover;
+  object-position: center;
+`;
+export const ModalPicture = styled.img`
+  width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
