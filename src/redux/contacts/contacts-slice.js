@@ -4,6 +4,7 @@ import {
   fetchContacts,
   addContact,
   deleteContact,
+  changeContact,
 } from './contacts-operations';
 
 const initialState = {
@@ -48,7 +49,24 @@ const contactsSlice = createSlice({
         state.error = null;
         state.items = state.items.filter(({ id }) => id !== payload);
       })
-      .addCase(deleteContact.rejected, handleRejected);
+      .addCase(deleteContact.rejected, handleRejected)
+      //
+      .addCase(changeContact.pending, handlePending)
+      .addCase(changeContact.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = null;
+        state.items = state.items.filter(({ id }) => id !== payload);
+      })
+      // gpt ??? why id must work too... ???
+      // .addCase(changeContact.fulfilled, (state, { payload }) => {
+      //   state.isLoading = false;
+      //   state.error = null;
+      //   const index = state.items.findIndex(({ id }) => id === payload.id);
+      //   if (index !== -1) {
+      //     state.items[index] = payload;
+      //   }
+      // })
+      .addCase(changeContact.rejected, handleRejected);
   },
 });
 
