@@ -12,7 +12,7 @@ export const fetchContacts = createAsyncThunk(
       const { data } = await api.getAllContacts();
       return data;
     } catch ({ response }) {
-      return thunkAPI.rejectWithValue(response);
+      return thunkAPI.rejectWithValue(`Ooops! ${response}`);
     }
   }
 );
@@ -37,7 +37,7 @@ export const addContact = createAsyncThunk(
       const { data: result } = await api.addContact(data);
       return result;
     } catch ({ response }) {
-      return rejectWithValue(response);
+      return rejectWithValue(`Ooops! ${response}`);
     }
   },
   // щоб зробити перевірку до запиту на дублікати - передаємо 3-ім аргументом object with condition
@@ -62,7 +62,7 @@ export const deleteContact = createAsyncThunk(
       await api.deleteContact(id);
       return id;
     } catch ({ response }) {
-      return rejectWithValue(response);
+      return rejectWithValue(`Ooops! ${response}`);
     }
   }
 );
@@ -81,7 +81,7 @@ export const changeContact = createAsyncThunk(
       toast.error(`Ooops! ${response}`, {
         position: 'bottom-right',
       });
-      return rejectWithValue(response);
+      return rejectWithValue(`Ooops! ${response}`);
     }
   }
 );
