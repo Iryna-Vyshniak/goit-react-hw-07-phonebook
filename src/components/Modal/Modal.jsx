@@ -20,13 +20,15 @@ import { ChangeContactModal } from 'components/ChangeContactModal/ChangeContactM
 Modal.setAppElement('#root');
 
 export const ContactModal = ({ isOpen, data, onClose }) => {
-  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const openModal = () => {
-    setIsOpen(true);
+  const openChangeModal = () => {
+    setModalIsOpen(true);
   };
-  const closeModal = () => {
-    setIsOpen(false);
+
+  const closeChangeModal = () => {
+    setModalIsOpen(false);
+    onClose();
   };
 
   return (
@@ -54,13 +56,14 @@ export const ContactModal = ({ isOpen, data, onClose }) => {
           </p>
         </Tooltip>
       </PictureDescr>
-      <Button onClick={openModal}>
+      <Button onClick={openChangeModal}>
         <TfiPencil size="16" />
       </Button>
       <ChangeContactModal
         isOpen={modalIsOpen}
-        onClose={closeModal}
+        onClose={closeChangeModal}
         data={data}
+        setModalIsOpen={setModalIsOpen}
       />
     </Modal>
   );
