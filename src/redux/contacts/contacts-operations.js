@@ -66,3 +66,22 @@ export const deleteContact = createAsyncThunk(
     }
   }
 );
+
+export const changeContact = createAsyncThunk(
+  'contacts/editContact',
+  async (data, { rejectWithValue }) => {
+    try {
+      const { data: result } = await api.editContact(data);
+      toast.success('Contact update!', {
+        position: 'bottom-right',
+      });
+      console.log(result);
+      return result;
+    } catch ({ response }) {
+      toast.error(`Ooops! ${response}`, {
+        position: 'bottom-right',
+      });
+      return rejectWithValue(response);
+    }
+  }
+);
