@@ -10,11 +10,36 @@ export const CloseBtn = styled.button`
   width: 24px;
   height: 24px;
   border-radius: none;
-  border: 1px solid #ffffff;
-  background: #ecf0f3;
-  box-shadow: inset -3px -3px 7px #ffffff, inset 3px 3px 5px #ceced1,
-    2px 2px 2px #0f0f0f;
-  color: #bbbbbb;
+  border: ${props => props.theme.borders.none};
+  outline: none;
+
+  box-shadow: ${props => props.theme.shadows.boxShadow};
+  transition: all 0.2s ease-in-out;
+
+  background-color: ${props => props.theme.colors.background};
+
+  color: ${props => props.theme.colors.black};
+  text-shadow: ${props => props.theme.shadows.textShadow};
+
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    box-shadow: inset -1px -1px 1px #ffffff, inset 1px 1px 1px #8e9aaf;
+
+    svg {
+      fill: ${p => p.theme.colors.primary};
+      stroke: ${p => p.theme.colors.black};
+    }
+  }
+
+  &:active {
+    background-color: ${p => p.theme.colors.accent};
+    svg {
+      fill: ${p => p.theme.colors.black};
+      stroke: ${p => p.theme.colors.white};
+    }
+  }
 `;
 
 export const ModalPictureWrapper = styled.div`
