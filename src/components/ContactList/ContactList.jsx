@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // toastify
@@ -7,7 +7,26 @@ import { toastifyOptions } from 'utils/toastifyOptions';
 
 // @chakra-ui/react'
 import { Tooltip } from '@chakra-ui/react';
+// mui
+import Avatar from '@mui/material/Avatar';
 
+// redux
+import { fetchContacts } from 'redux/contacts/contacts-operations';
+import { deleteContact } from 'redux/contacts/contacts-operations';
+import {
+  getContacts,
+  getIsLoading,
+  getError,
+} from 'redux/contacts/contacts-selectors';
+import { getFilter } from 'redux/filter/filter-selectors';
+// conponents
+import { ContactModal } from 'components/Modal/Modal';
+import { Loader } from 'components/Loader/Loader';
+// functions
+import { getRandomHexColor } from 'utils/getRandomHexColor';
+import { abbrevName } from 'utils/abbrevName';
+
+// style
 import { IoPersonRemove } from 'react-icons/io5';
 import {
   Btn,
@@ -21,20 +40,6 @@ import {
   WhatsappShareButton,
   WrapperBtns,
 } from './ContactList.styled';
-
-// redux
-import { fetchContacts } from 'redux/contacts/contacts-operations';
-import { deleteContact } from 'redux/contacts/contacts-operations';
-import {
-  getContacts,
-  getIsLoading,
-  getError,
-} from 'redux/contacts/contacts-selectors';
-import { getFilter } from 'redux/filter/filter-selectors';
-
-import { ContactModal } from 'components/Modal/Modal';
-import { Fragment } from 'react';
-import Avatar from 'assets/avatar.png';
 
 export const ContactList = () => {
   const contacts = useSelector(getContacts);
@@ -83,9 +88,19 @@ export const ContactList = () => {
     setSelectedContact(selectContact);
   };
 
+  function stringAvatar(name) {
+    //console.log(name);
+    return {
+      sx: {
+        bgcolor: getRandomHexColor(),
+      },
+      children: abbrevName(name),
+    };
+  }
+
   return (
     <>
-      {isLoading && contacts.length === 0 && <div>Loading....</div>}
+      {isLoading && contacts.length === 0 && <Loader />}
       {error && !isLoading && <div>Ooops, error...</div>}
       {!error && !isLoading && filteredContacts.length > 0 ? (
         <List>
@@ -101,12 +116,19 @@ export const ContactList = () => {
                     fontSize="xs"
                   >
                     <ModalPictureWrapper>
-                      <Image
-                        src={avatar !== '' ? `${avatar}` : Avatar}
-                        alt="Contact`s avatar"
-                        width="48"
-                        onClick={() => setModalData(id)}
-                      />
+                      {avatar !== '' ? (
+                        <Image
+                          src={avatar}
+                          alt="Contact`s avatar"
+                          width="48"
+                          onClick={() => setModalData(id)}
+                        />
+                      ) : (
+                        <Avatar
+                          onClick={() => setModalData(id)}
+                          {...stringAvatar(Object.values(name).join(''))}
+                        />
+                      )}
                     </ModalPictureWrapper>
                   </Tooltip>
                   <ContactDescr>
