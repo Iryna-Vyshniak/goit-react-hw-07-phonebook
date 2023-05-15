@@ -2,8 +2,8 @@ import { useEffect, useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // toastify
-// import { toast } from 'react-toastify';
-// import { toastifyOptions } from 'utils/toastifyOptions';
+import { toast } from 'react-toastify';
+import { toastifyOptions } from 'utils/toastifyOptions';
 
 // @chakra-ui/react'
 import { Tooltip } from '@chakra-ui/react';
@@ -18,8 +18,8 @@ import {
   selectIsLoading,
   selectError,
   selectFilteredContacts,
+  selectFilter,
 } from 'redux/selectors';
-//import { getFilter } from 'redux/filter/filter-selectors';
 
 // conponents
 import { ContactModal } from 'components/Modal/Modal';
@@ -47,7 +47,7 @@ export const ContactList = () => {
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-  //const filter = useSelector(getFilter);
+  const filter = useSelector(selectFilter);
 
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -57,27 +57,17 @@ export const ContactList = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  // const getFilteredContacts = () => {
-  //   if (!filter) {
-  //     return contacts;
-  //   }
-  //   const normalizedFilter = filter.toLowerCase();
+  const result = useSelector(selectFilteredContacts);
 
-  //   const filteredContacts = contacts.filter(
-  //     ({ name, phone }) =>
-  //       name.toLowerCase().trim().includes(normalizedFilter) ||
-  //       phone.trim().includes(normalizedFilter)
-  //   );
+  const getFilteredContacts = data => {
+    if (filter.toLowerCase() && !data.length) {
+      toast.warn(`No contacts matching your request`, toastifyOptions);
+    }
+    return data;
+  };
 
-  //   if (normalizedFilter && !filteredContacts.length) {
-  //     toast.warn(`No contacts matching your request`, toastifyOptions);
-  //     return [];
-  //   }
-  //   return filteredContacts;
-  // };
-
-  // const filteredContacts = getFilteredContacts();
-  const filteredContacts = useSelector(selectFilteredContacts);
+  const filteredContacts = getFilteredContacts(result);
+  //console.log(filteredContacts);
 
   const onDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
@@ -107,7 +97,7 @@ export const ContactList = () => {
       {isLoading && contacts.length === 0 && <Loader />}
       {error && !isLoading && <div>Ooops, error...</div>}
       {!filteredContacts?.length && !error && !isLoading && (
-        <Info>Phonebook is emptyPlease, add your first contact</Info>
+        <Info>Contacts not found</Info>
       )}
       {!error && !isLoading && filteredContacts.length > 0 && (
         <List>
