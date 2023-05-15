@@ -34,35 +34,42 @@ const handleRejected = (state, { payload }) => {
   state.error = payload;
 };
 
+const handleFulfilled = (state, { payload }) => {
+  state.isLoading = false;
+  state.error = null;
+  state.items = payload;
+};
+
+const handleFulfilledAdd = (state, { payload }) => {
+  state.isLoading = false;
+  state.error = null;
+  state.items.push(payload);
+};
+
+const handleFulfilledDelete = (state, { payload }) => {
+  state.isLoading = false;
+  state.error = null;
+  state.items = state.items.filter(({ id }) => id !== payload);
+};
+
+const handleFulfilledChange = (state, { payload }) => {
+  state.isLoading = false;
+  state.error = null;
+  const index = state.items.findIndex(({ id }) => id === payload.id);
+  if (index !== -1) {
+    state.items[index] = payload;
+  }
+};
+
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = null;
-        state.items = payload;
-      })
-      .addCase(addContact.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = null;
-        state.items.push(payload);
-      })
-      .addCase(deleteContact.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = null;
-        state.items = state.items.filter(({ id }) => id !== payload);
-      })
-      .addCase(changeContact.fulfilled, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = null;
-        const index = state.items.findIndex(({ id }) => id === payload.id);
-        if (index !== -1) {
-          state.items[index] = payload;
-        }
-      })
+      .addCase(fetchContacts.fulfilled, handleFulfilled)
+      .addCase(addContact.fulfilled, handleFulfilledAdd)
+      .addCase(deleteContact.fulfilled, handleFulfilledDelete)
+      .addCase(changeContact.fulfilled, handleFulfilledChange)
       .addMatcher(isAnyOf(...fn(defaultStatus.pending)), handlePending)
       .addMatcher(isAnyOf(...fn(defaultStatus.rejected)), handleRejected);
   },
