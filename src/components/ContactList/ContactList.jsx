@@ -67,7 +67,6 @@ export const ContactList = () => {
   };
 
   const filteredContacts = getFilteredContacts(result);
-  //console.log(filteredContacts);
 
   const onDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
