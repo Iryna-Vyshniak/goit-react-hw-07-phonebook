@@ -20,7 +20,7 @@ const customArrThunks = [
   changeContact,
 ];
 
-const defaultStatus = {
+const status = {
   pending: 'pending',
   fulfilled: 'fulfilled',
   rejected: 'rejected',
@@ -66,14 +66,15 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   extraReducers: builder => {
+    const { pending, fulfilled, rejected } = status;
     builder
       .addCase(fetchContacts.fulfilled, handleFulfilledGet)
       .addCase(addContact.fulfilled, handleFulfilledAdd)
       .addCase(deleteContact.fulfilled, handleFulfilledDelete)
       .addCase(changeContact.fulfilled, handleFulfilledChange)
-      .addMatcher(isAnyOf(...fn(defaultStatus.pending)), handlePending)
-      .addMatcher(isAnyOf(...fn(defaultStatus.fulfilled)), handleFulfilled)
-      .addMatcher(isAnyOf(...fn(defaultStatus.rejected)), handleRejected);
+      .addMatcher(isAnyOf(...fn(pending)), handlePending)
+      .addMatcher(isAnyOf(...fn(fulfilled)), handleFulfilled)
+      .addMatcher(isAnyOf(...fn(rejected)), handleRejected);
   },
 });
 
