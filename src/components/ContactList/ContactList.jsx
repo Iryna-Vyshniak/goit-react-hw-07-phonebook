@@ -2,8 +2,8 @@ import { useEffect, useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // toastify
-import { toast } from 'react-toastify';
-import { toastifyOptions } from 'utils/toastifyOptions';
+// import { toast } from 'react-toastify';
+// import { toastifyOptions } from 'utils/toastifyOptions';
 
 // @chakra-ui/react'
 import { Tooltip } from '@chakra-ui/react';
@@ -17,8 +17,10 @@ import {
   selectContacts,
   selectIsLoading,
   selectError,
-} from 'redux/contacts/contacts-selectors';
-import { getFilter } from 'redux/filter/filter-selectors';
+  selectFilteredContacts,
+} from 'redux/selectors';
+//import { getFilter } from 'redux/filter/filter-selectors';
+
 // conponents
 import { ContactModal } from 'components/Modal/Modal';
 import { Loader } from 'components/Loader/Loader';
@@ -45,7 +47,7 @@ export const ContactList = () => {
   const contacts = useSelector(selectContacts);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-  const filter = useSelector(getFilter);
+  //const filter = useSelector(getFilter);
 
   const [selectedContact, setSelectedContact] = useState(null);
 
@@ -55,26 +57,27 @@ export const ContactList = () => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const getFilteredContacts = () => {
-    if (!filter) {
-      return contacts;
-    }
-    const normalizedFilter = filter.toLowerCase();
+  // const getFilteredContacts = () => {
+  //   if (!filter) {
+  //     return contacts;
+  //   }
+  //   const normalizedFilter = filter.toLowerCase();
 
-    const filteredContacts = contacts.filter(
-      ({ name, phone }) =>
-        name.toLowerCase().trim().includes(normalizedFilter) ||
-        phone.trim().includes(normalizedFilter)
-    );
+  //   const filteredContacts = contacts.filter(
+  //     ({ name, phone }) =>
+  //       name.toLowerCase().trim().includes(normalizedFilter) ||
+  //       phone.trim().includes(normalizedFilter)
+  //   );
 
-    if (normalizedFilter && !filteredContacts.length) {
-      toast.warn(`No contacts matching your request`, toastifyOptions);
-      return [];
-    }
-    return filteredContacts;
-  };
+  //   if (normalizedFilter && !filteredContacts.length) {
+  //     toast.warn(`No contacts matching your request`, toastifyOptions);
+  //     return [];
+  //   }
+  //   return filteredContacts;
+  // };
 
-  const filteredContacts = getFilteredContacts();
+  // const filteredContacts = getFilteredContacts();
+  const filteredContacts = useSelector(selectFilteredContacts);
 
   const onDeleteContact = contactId => {
     dispatch(deleteContact(contactId));
@@ -103,7 +106,10 @@ export const ContactList = () => {
     <>
       {isLoading && contacts.length === 0 && <Loader />}
       {error && !isLoading && <div>Ooops, error...</div>}
-      {!error && !isLoading && filteredContacts.length > 0 ? (
+      {!filteredContacts?.length && !error && !isLoading && (
+        <Info>Phonebook is emptyPlease, add your first contact</Info>
+      )}
+      {!error && !isLoading && filteredContacts.length > 0 && (
         <List>
           {filteredContacts?.map(({ avatar, name, phone, id }) => {
             return (
@@ -133,7 +139,7 @@ export const ContactList = () => {
                     </ModalPictureWrapper>
                   </Tooltip>
                   <ContactDescr>
-                    <span>{name}:</span>
+                    <span>{name} </span>
                     <Tooltip
                       label="Call"
                       hasArrow
@@ -184,8 +190,6 @@ export const ContactList = () => {
             );
           })}
         </List>
-      ) : (
-        <Info>Phonebook is empty. Please, add your first contact</Info>
       )}
     </>
   );
