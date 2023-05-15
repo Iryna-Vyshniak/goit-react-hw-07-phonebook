@@ -15,6 +15,11 @@ const initialState = {
 
 const customArr = [fetchContacts, addContact, deleteContact, changeContact];
 
+const defaultStatus = {
+  pending: 'pending',
+  rejected: 'rejected',
+};
+
 const fn = status => {
   return customArr.map(el => el[status]);
 };
@@ -58,9 +63,8 @@ const contactsSlice = createSlice({
           state.items[index] = payload;
         }
       })
-      .addCase(changeContact.rejected, handleRejected)
-      .addMatcher(isAnyOf(...fn('pending')), handlePending)
-      .addMatcher(isAnyOf(...fn('rejected')), handleRejected);
+      .addMatcher(isAnyOf(...fn(defaultStatus.pending)), handlePending)
+      .addMatcher(isAnyOf(...fn(defaultStatus.rejected)), handleRejected);
   },
 });
 
