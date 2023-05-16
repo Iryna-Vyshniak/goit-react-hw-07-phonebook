@@ -47,12 +47,12 @@ export const ContactList = () => {
 
   return (
     <>
-      {isLoading && contacts.length === 0 && <Loader />}
+      {isLoading && contacts?.length === 0 && <Loader />}
       {error && !isLoading && <div>Ooops, error...</div>}
       {!filteredContacts?.length && !error && !isLoading && (
         <Info>Contacts not found</Info>
       )}
-      {!error && !isLoading && filteredContacts.length > 0 && (
+      {!error && !isLoading && filteredContacts?.length > 0 && (
         <List>
           {filteredContacts?.map(({ avatar, name, phone, id }) => {
             return (
