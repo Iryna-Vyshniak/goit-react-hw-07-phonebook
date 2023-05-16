@@ -1,6 +1,9 @@
 import Modal from 'react-modal';
-
+import { useState } from 'react';
+import { TfiPencil } from 'react-icons/tfi';
 import { MdOutlineClose } from 'react-icons/md';
+import { Tooltip } from '@mui/material';
+
 import Avatar from 'assets/avatar.png';
 import {
   Button,
@@ -10,16 +13,12 @@ import {
   PictureDescr,
 } from './Modal.styled';
 import { customStyles } from 'styles/modalStyles';
-import { useState } from 'react';
 
-import { Tooltip } from '@chakra-ui/react';
-
-import { TfiPencil } from 'react-icons/tfi';
 import { ChangeContactModal } from 'components/ChangeContactModal/ChangeContactModal';
 
 Modal.setAppElement('#root');
 
-export const ContactModal = ({ isOpen, data, onClose }) => {
+export const ContactModal = ({ isOpen, data, onClose, isValidImageUrl }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openChangeModal = () => {
@@ -43,14 +42,29 @@ export const ContactModal = ({ isOpen, data, onClose }) => {
       </CloseBtn>
       <ModalPictureWrapper>
         <ModalPicture
-          src={data?.avatar !== '' ? `${data?.avatar}` : Avatar}
+          src={
+            data?.avatar !== '' && isValidImageUrl ? `${data?.avatar}` : Avatar
+          }
           alt="photo"
           width="260"
         />
       </ModalPictureWrapper>
       <PictureDescr>
         <p>{data?.name}</p>
-        <Tooltip label="Call" hasArrow bg="gray.300" color="#000" fontSize="xs">
+        <Tooltip
+          title="Call"
+          describeChild
+          PopperProps={{
+            sx: {
+              '& .MuiTooltip-tooltip': {
+                bgcolor: '#608B38',
+                color: '#FFF',
+                width: '50px',
+                textAlign: 'center',
+              },
+            },
+          }}
+        >
           <p>
             <a href={'tel:' + data?.phone}>{data?.phone}</a>
           </p>
